@@ -1,9 +1,12 @@
-
 public class DumbPlayer extends Player {
 
-	public DumbPlayer(String name, String rpsValue) {
-		super(name, rpsValue);
-		// TODO Auto-generated constructor stub
+	public DumbPlayer(String name, RoshamboEnum roshamboEnum) {
+		super(name, roshamboEnum);
 	}
-	
+
+	@Override
+	public RoshamboEnum generateRoshambo() {
+		return RoshamboEnum.ROCK;
+	}
+
 }

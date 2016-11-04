@@ -7,50 +7,51 @@ public class RoshamboApp {
 		Scanner scan = new Scanner(System.in);
 		String playerName;
 		String expertOrDumb;
-		RoshamboEnum compFinal = null;
 		String playerRpsChoice;
-		String choice = "y";
+		String choice = "y"; 
+		ExpertPlayer expertPlayer = new ExpertPlayer("Expert Player", null);
+		DumbPlayer dumbPlayer = new DumbPlayer("DumbPlayer", null);
+		UserPlayer userPlayer = new UserPlayer("Name", null);
+		Player Opponent = null;
 		
-		//System.out.println(RoshamboEnum.ROCK);
-		ExpertPlayer expertPlayer = new ExpertPlayer("Expert Player", "rock");
-		DumbPlayer dumbPlayer = new DumbPlayer("Dumb Player", "rock");
-		
-		//System.out.println(Player.generateRoshambo(dumbPlayer1));
-		//stem.out.println(Player.generateRoshambo("Rock"));
 		System.out.println("Welcome to Rock Paper Scissors!");
 		
 		System.out.println("Enter your name: ");
-		playerName = scan.nextLine();
+		userPlayer.setName(scan.nextLine());
 		
+		//plays the game while equal to Y
 		while (choice.equalsIgnoreCase("y")) {
 		
-		do {
-		System.out.println("Would you like to play against ExpertPlayer or DumbPlayer(e/d)?");
+		//chooses which player to play against and keeps prompting until they type e or d
+		/*do {
+		
 		expertOrDumb = scan.nextLine();
-		} while(!expertOrDumb.equalsIgnoreCase("e") && !expertOrDumb.equalsIgnoreCase("d"));
-		
-		do {
-		System.out.println("Rock, Paper, or Scissors? (R/P/S)");
-		playerRpsChoice = scan.nextLine();
-		} while(!playerRpsChoice.equalsIgnoreCase("r") && (!playerRpsChoice.equalsIgnoreCase("p")) && !playerRpsChoice.equalsIgnoreCase("s"));
-		
-		RoshamboEnum playerFinal = Player.generateRoshambo(playerRpsChoice);
-		System.out.println(playerName + ":" + playerFinal );
+		} while(!expertOrDumb.equalsIgnoreCase("e") && !expertOrDumb.equalsIgnoreCase("d")); */
+		expertOrDumb = (Validator.validateTwoStrings(scan, "Would you like to play against ExpertPlayer or DumbPlayer? (e/d)", "e", "d"));
 		
 		if (expertOrDumb.equalsIgnoreCase("e")) {
-			compFinal = Player.generateRoshambo(expertPlayer);
-			System.out.println(expertPlayer.getName() + ":" + compFinal );
+			Opponent = expertPlayer;
+			
 		} else if (expertOrDumb.equalsIgnoreCase("d")) {
-			compFinal = Player.generateRoshambo(dumbPlayer);
-			System.out.println(dumbPlayer.getName() + ":" + compFinal);
+			Opponent = dumbPlayer;
 		}
 		
+		playerRpsChoice = (Validator.validateThreeStrings(scan, "Rock, Paper, or Scissors? (R/P/S)", "r", "p", "s"));
+		
+		//Setting the Roshambo for player and computer 
+		userPlayer.setChoice(playerRpsChoice);
+		Opponent.setRoshambo(Opponent.generateRoshambo());
+		
+		//Storing the final variables to compare later
+		RoshamboEnum playerFinal = userPlayer.generateRoshambo();
+		RoshamboEnum compFinal = Opponent.generateRoshambo();
+		
+		//Printing out results
+		System.out.println(userPlayer.getName() + ":" + playerFinal );
+		System.out.println(Opponent.getName() + ":" + compFinal);
 		System.out.println(winLoseTie(playerFinal, compFinal));
 		
-		do {
-		System.out.println("Play again?");
-		choice = scan.nextLine();
-		} while (!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"));
+		choice = (Validator.validateTwoStrings(scan, "Would you like to play again? (y/n)", "y", "n"));
 		
 		} 
 		
